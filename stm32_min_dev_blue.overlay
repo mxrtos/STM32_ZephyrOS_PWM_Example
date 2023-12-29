@@ -1,0 +1,30 @@
+//For the LED
+// / {
+//     leds {
+//         compatible = "gpio-leds";
+//         blinking_led: blinking_led {
+//             gpios = <&gpioc 13 GPIO_ACTIVE_HIGH>; #pin PC13
+//             #gpios = <&gpioa 11 GPIO_ACTIVE_HIGH>; #pin PA11
+//         };
+//     };
+// };
+
+// For the PWM
+&timers3
+{   
+    status = "okay"; //Enable timer3
+    mypwmled0: pwm {
+        status = "okay"; //enable pwm
+        pinctrl-0 = <&tim3_ch4_pwm_out_pb1>;
+        pinctrl-names = "default";
+    };
+};
+
+/ {
+    pwmleds {
+        compatible = "pwm-leds";
+        fading_led: fading_led {
+            pwms = <&mypwmled0 4 10000 PWM_POLARITY_NORMAL>;
+        };
+    };
+};
